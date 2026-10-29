@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="VocabVeda is your personal vocabulary journal to discover words, learn meanings, practice pronunciation and build your vocabulary.">
+
+    <title>VocabVeda | The Art of Words</title>
+
+    
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%2326382C'/%3E%3Cpath d='M24 25 L44 74 Q50 88 57 74 L78 25' fill='none' stroke='%23F0E6D0' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M55 72 Q66 50 76 31' fill='none' stroke='%23A8B58C' stroke-width='3'/%3E%3Cpath d='M64 50 Q49 46 50 35 Q64 37 64 50Z M68 42 Q65 29 78 25 Q81 37 68 42Z' fill='%23A8B58C'/%3E%3C/svg%3E"
+    />
+
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        ink: '#171914',
+                        forest: '#26382C',
+                        moss: '#526448',
+                        parchment: '#F0E6D0',
+                        paper: '#FAF5E9',
+                        antique: '#C8AD79',
+                        muted: '#8D826D',
+                        wine: '#753E38'
+                    },
+                    fontFamily: {
+                        display: ['Georgia', 'serif'],
+                        body: ['Palatino Linotype', 'Book Antiqua', 'serif']
+                    },
+                    boxShadow: {
+                        antique: '0 12px 35px rgba(0,0,0,0.28)',
+                        glow: '0 0 25px rgba(200,173,121,0.12)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body.light-mode {
+            background-color: #F3EBDD !important;
+            color: #30291F !important;
+        }
+
+        body.light-mode #background-overlay {
+            background: rgba(243, 235, 221, 0.93) !important;
+        }
+
+        body.light-mode #main-header {
+            background: rgba(250, 246, 237, 0.97) !important;
+            border-color: #D9C8A9 !important;
+            box-shadow: 0 5px 20px rgba(59, 47, 30, 0.10) !important;
+        }
+
+        body.light-mode #main-header a {
+            color: #35412F;
+        }
+
+        body.light-mode #main-header a:hover {
+            color: #805B27;
+        }
+
+        body.light-mode #main-header h1 {
+            color: #35412F !important;
+        }
+
+        body.light-mode #main-header p {
+            color: #805B27 !important;
+        }
+
+        body.light-mode #main-header > nav > a > div:first-child {
+            background: #344431 !important;
+            border-color: #BDA477 !important;
+            color: #E6C98D !important;
+        }
+
+        body.light-mode #theme-toggle {
+            background: #EFE3CB !important;
+            border-color: #BDA477 !important;
+            color: #35412F !important;
+        }
+
+        body.light-mode #theme-toggle:hover {
+            background: #E2D0AC !important;
+            color: #30291F !important;
+        }
+
+        body.light-mode .text-parchment {
+            color: #3D352A !important;
+        }
+
+        body.light-mode [class*="text-parchment/"] {
+            color: #645746 !important;
+        }
+
+        body.light-mode .text-antique {
+            color: #805B27 !important;
+        }
+
+        body.light-mode .text-muted {
+            color: #746653 !important;
+        }
+
+        body.light-mode > div.pointer-events-none {
+            opacity: 0.035 !important;
+        }
+
+        body.light-mode #home > section:first-child .text-parchment,
+        body.light-mode #home > section:first-child [class*="text-parchment/"],
+        body.light-mode #home > section:first-child .text-antique,
+        body.light-mode #home > section:last-of-type .text-parchment,
+        body.light-mode #home > section:last-of-type [class*="text-parchment/"],
+        body.light-mode #home > section:last-of-type .text-antique {
+            color: #F7F0E2 !important;
+        }
+
+        body.light-mode #home > section:first-child .text-antique,
+        body.light-mode #home > section:last-of-type .text-antique {
+            color: #E6C98D !important;
+        }
+
+        body.light-mode #home > section:first-child a[href="#search"] {
+            background: #E6C98D !important;
+            color: #30291F !important;
+            border-color: #E6C98D !important;
+        }
+
+        body.light-mode #home > section:first-child a[href="#my-words"] {
+            background: rgba(20, 28, 20, 0.58) !important;
+            color: #FFF8EA !important;
+            border-color: rgba(255, 248, 234, 0.6) !important;
+        }
+
+        body.light-mode #home > section:nth-child(2) h2,
+        body.light-mode #stats h2,
+        body.light-mode #search h2,
+        body.light-mode #my-words h2,
+        body.light-mode #quiz h2 {
+            color: #35412F !important;
+        }
+
+        body.light-mode #home > section:nth-child(2) p:not(.text-antique) {
+            color: #5B5041 !important;
+        }
+
+body.light-mode #stats .grid > div {
+    background: linear-gradient(145deg, #FFFCF6, #F0E5D1) !important;
+    background-color: #FFFCF6 !important;
+    border-color: #D8C5A2 !important;
+    color: #35412F !important;
+    box-shadow: 0 8px 22px rgba(70, 53, 31, 0.10) !important;
+}
+
+body.light-mode #stats .grid > div p {
+    color: #625542 !important;
+}
+
+body.light-mode #stats #total-saved,
+body.light-mode #stats #quiz-accuracy,
+body.light-mode #stats #quiz-attempts {
+    color: #805B27 !important;
+}
+
+
+        body.light-mode #word-search,
+        body.light-mode #saved-search {
+            background: #FFFCF6 !important;
+            color: #30291F !important;
+            border-color: #BDA477 !important;
+        }
+
+        body.light-mode #word-search::placeholder,
+        body.light-mode #saved-search::placeholder {
+            color: #887966 !important;
+        }
+
+        body.light-mode #word-search:focus,
+        body.light-mode #saved-search:focus {
+            border-color: #65744F !important;
+            box-shadow: 0 0 0 3px rgba(101, 116, 79, 0.16) !important;
+        }
+
+        body.light-mode #word-search-form button,
+        body.light-mode #start-quiz {
+            background: #344431 !important;
+            color: #FFF9ED !important;
+            border-color: #344431 !important;
+        }
+
+        body.light-mode #word-search-form button:hover,
+        body.light-mode #start-quiz:hover {
+            background: #4E6345 !important;
+            color: #FFFFFF !important;
+        }
+
+        body.light-mode #loading-state,
+        body.light-mode #empty-state,
+        body.light-mode #saved-empty-state {
+            background: #FBF7EF !important;
+            border-color: #D7C4A0 !important;
+        }
+
+        body.light-mode #loading-state p,
+        body.light-mode #empty-state p,
+        body.light-mode #saved-empty-state p {
+            color: #5B5041 !important;
+        }
+
+        body.light-mode #loading-state .text-antique,
+        body.light-mode #empty-state .text-antique,
+        body.light-mode #saved-empty-state .text-antique {
+            color: #805B27 !important;
+        }
+
+        body.light-mode #word-results > *,
+        body.light-mode #saved-words-list > * {
+            color: #3A3227 !important;
+        }
+  
+        body.light-mode #saved-words-list > * {
+        background: #FAF5E9 !important;
+        border-color: #D8C5A2 !important;
+        box-shadow: 0 5px 16px rgba(70, 53, 31, 0.08);
+        }
+
+        body.light-mode #saved-words-list h1,
+        body.light-mode #saved-words-list h2,
+        body.light-mode #saved-words-list h3,
+        body.light-mode #saved-words-list h4,
+        body.light-mode #saved-words-list p,
+        body.light-mode #saved-words-list span,
+        body.light-mode #saved-words-list strong,
+        body.light-mode #saved-words-list small {
+        color: #3A3227 !important;
+        }
+
+        body.light-mode #saved-words-list button {
+        background: #F8F1E4 !important;
+        color: #35412F !important;
+        border-color: #A58A5C !important;
+        }
+
+        body.light-mode #saved-words-list button:hover {
+        background: #E8D9BC !important;
+        color: #30291F !important;
+        }
+
+        
+        body.light-mode #previous-question,
+        body.light-mode #complete-quiz,
+        body.light-mode #next-question,
+        body.light-mode #reveal-answer {
+        background: #F8F1E4 !important;
+        color: #35412F !important;
+        border-color: #A58A5C !important;
+        }
+
+        body.light-mode #previous-question:hover,
+        body.light-mode #complete-quiz:hover,
+        body.light-mode #next-question:hover,
+        body.light-mode #reveal-answer:hover {
+        background: #E8D9BC !important;
+        color: #30291F !important;
+        border-color: #8B6A36 !important;
+        }
+
+        body.light-mode #refresh-words {
+        background: #F8F1E4 !important;
+        color: #35412F !important;
+        border-color: #A58A5C !important;
+        }
+
+        body.light-mode #refresh-words:hover {
+        background: #E8D9BC !important;
+        color: #30291F !important;
+        }
+
+
+        
+
+        body.light-mode #quiz > div:first-child > p:first-child {
+            color: #805B27 !important;
+        }
+
+        body.light-mode #quiz > div:first-child h2 {
+            color: #35412F !important;
+        }
+
+        body.light-mode #quiz > div:first-child p:not(:first-child) {
+            color: #5B5041 !important;
+        }
+
+        body.light-mode #quiz > div:last-child .text-parchment,
+        body.light-mode #quiz > div:last-child [class*="text-parchment/"] {
+            color: #F7F0E2 !important;
+        }
+
+        body.light-mode #quiz > div:last-child .text-antique {
+            color: #E6C98D !important;
+        }
+
+        
+        body.light-mode #quiz-options button {
+        background: #FAF4E8 !important;
+        color: #30291F !important;
+        border-color: #BDA477 !important;
+        opacity: 1 !important;
+        }
+
+        body.light-mode #quiz-options button:hover:not(:disabled) {
+        background: #E7D8B8 !important;
+        color: #30291F !important;
+        border-color: #8B6A36 !important;
+        }
+
+        body.light-mode #quiz-options button:disabled {
+        color: #30291F !important;
+        opacity: 1 !important;
+        }
+
+
+        body.light-mode #quiz-answer {
+            background: #344431 !important;
+        }
+
+        body.light-mode #quiz-answer p {
+            color: #FFF7E8 !important;
+        }
+
+        body.light-mode footer {
+            border-color: #D7C4A0 !important;
+        }
+
+        body.light-mode footer a {
+            color: #4B563B;
+        }
+
+        body.light-mode footer a:hover {
+            color: #805B27;
+        }
+
+        body.light-mode footer p {
+            color: #746653 !important;
+        }
+
+        #quiz-options button {
+            width: 100%;
+            min-height: 3.5rem;
+            padding: 0.9rem 1rem;
+            text-align: left;
+            border: 1px solid #8D805F;
+            border-radius: 0.25rem;
+            background: #28362A;
+            color: #F7F0E2;
+            transition: background-color 180ms ease,
+                        border-color 180ms ease,
+                        transform 180ms ease;
+        }
+
+        #quiz-options button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            background: #40533B;
+            border-color: #C8AD79;
+        }
+
+        #quiz-options button:disabled {
+            cursor: default;
+        }
+
+        button:focus-visible,
+        a:focus-visible,
+        input:focus-visible {
+            outline: 3px solid #8A642F;
+            outline-offset: 3px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        body.light-mode #word-results {
+        color: #2B2116;
+        }
+
+        body.light-mode #word-results h1,
+        body.light-mode #word-results h2,
+        body.light-mode #word-results h3,
+        body.light-mode #word-results h4,
+        body.light-mode #word-results p,
+        body.light-mode #word-results li,
+        body.light-mode #word-results span,
+        body.light-mode #word-results strong,
+        body.light-mode #word-results em,
+        body.light-mode #word-results small,
+        body.light-mode #word-results blockquote {
+        color: #2B2116 !important;
+       }
+
+       body.light-mode #word-results > * {
+       background-color: #FFFDF8;
+       border-color: #E7D9C9;
+       }
+
+       body.light-mode #word-results a {
+       color: #854D2D !important;
+       text-decoration: underline;
+       }
+       
+       body.light-mode #word-wisdom article,
+       body.light-mode #word-categories article,
+       body.light-mode #learning-routine > div > div:last-child > div {
+       background-color: #FAF5E9 !important;
+       border-color: rgba(117, 62, 56, 0.25) !important;
+       }
+
+       body.light-mode #word-wisdom h2,
+       body.light-mode #word-categories h2,
+       body.light-mode #learning-routine h2 {
+       color: #28251D !important;
+       }
+
+       body.light-mode #word-wisdom h3,
+       body.light-mode #word-categories h3,
+       body.light-mode #learning-routine h3 {
+       color: #40372B !important;
+      }
+
+      body.light-mode #word-wisdom p:not(.text-antique),
+      body.light-mode #word-categories p:not(.text-antique),
+      body.light-mode #learning-routine p:not(.text-antique) {
+      color: #655744 !important;
+     }
+
+     body.light-mode #word-wisdom article > p:first-child,
+     body.light-mode #word-categories article > span,
+     body.light-mode #learning-routine article > span {
+     color: #75501D !important;
+     }
+
+     body.light-mode #word-categories article p.text-antique {
+     color: #75501D !important;
+     }
+
+     body.light-mode #learning-routine article {
+     border-color: rgba(117, 62, 56, 0.25) !important;
+     }
+
+     body.light-mode #word-categories > div:last-child {
+     background-color: #E8D7B5 !important;
+     border-color: rgba(117, 62, 56, 0.3) !important;
+     }
+
+     body.light-mode #word-categories > div:last-child h3 {
+     color: #28251D !important;
+     }
+
+     body.light-mode #word-categories > div:last-child p {
+     color: #655744 !important;
+     }
+
+     body.light-mode #word-categories > div:last-child a,
+     body.light-mode #learning-routine a {
+     border-color: #8B6238 !important;
+     color: #6B4527 !important;
+     }
+
+     body.light-mode #word-categories > div:last-child a:hover,
+     body.light-mode #learning-routine a:hover {
+     background-color: #B77945 !important;
+     color: #FFFFFF !important;
+     }
+     
+
+     body.light-mode #word-wisdom h3,
+     body.light-mode #word-categories h3,
+     body.light-mode #learning-routine h3 {
+     color: #40372B !important;
+     }
+
+     body.light-mode #word-wisdom p:not(.text-antique),
+     body.light-mode #word-categories p:not(.text-antique),
+     body.light-mode #learning-routine p:not(.text-antique) {
+     color: #655744 !important;
+     }
+
+     body.light-mode #word-wisdom article > p:first-child,
+     body.light-mode #word-categories article > span,
+     body.light-mode #learning-routine article > span {
+     color: #75501D !important;
+     }
+
+     body.light-mode #word-categories article p.text-antique {
+     color: #75501D !important;
+     }
+
+     body.light-mode #learning-routine article {
+     border-color: rgba(117, 62, 56, 0.25) !important;
+     }
+
+     body.light-mode #word-categories > div:last-child {
+     background-color: #E8D7B5 !important;
+     border-color: rgba(117, 62, 56, 0.3) !important;
+     }
+
+     body.light-mode #word-categories > div:last-child h3 {
+     color: #28251D !important;
+     }
+
+     body.light-mode #word-categories > div:last-child p {
+     color: #655744 !important;
+     }
+
+     body.light-mode #word-categories > div:last-child a,
+     body.light-mode #learning-routine a {
+     border-color: #8B6238 !important;
+     color: #6B4527 !important;
+     }
+
+     body.light-mode #word-categories > div:last-child a:hover,
+     body.light-mode #learning-routine a:hover {
+     background-color: #B77945 !important;
+     color: #FFFFFF !important;
+     }
+     
+     body.light-mode #word-tip {
+     background-color: #FAF5E9 !important;
+     border: 1px solid #C8AD79 !important;
+     box-shadow: 0 4px 14px rgba(65, 48, 30, 0.08);
+     }
+
+     body.light-mode #word-tip h3 {
+     color: #28251D !important;
+     }
+
+     body.light-mode #word-tip p {
+     color: #655744 !important;
+     }
+
+     body.light-mode #word-tip .tip-icon {
+     background-color: #E8D7B5 !important;
+     border-color: #B77945 !important;
+     color: #75501D !important;
+     }
+
+     
+     body.light-mode #quiz #quiz-options button,
+     body.light-mode #quiz #quiz-options button:link,
+     body.light-mode #quiz #quiz-options button:visited,
+     body.light-mode #quiz #quiz-options button:disabled {
+     background: #FAF4E8 !important;
+     background-color: #FAF4E8 !important;
+     color: #30291F !important;
+     -webkit-text-fill-color: #30291F !important;
+     border: 1px solid #A58A5C !important;
+     opacity: 1 !important;
+     text-shadow: none !important;
+     }
+
+     body.light-mode #quiz #quiz-options button *,
+     body.light-mode #quiz #quiz-options button span,
+     body.light-mode #quiz #quiz-options button p {
+     color: #30291F !important;
+     -webkit-text-fill-color: #30291F !important;
+     opacity: 1 !important;
+     }
+
+     body.light-mode #quiz #quiz-options button:hover:not(:disabled) {
+     background: #E8D9BC !important;
+     background-color: #E8D9BC !important;
+     color: #30291F !important;
+     -webkit-text-fill-color: #30291F !important;
+     border-color: #805B27 !important;
+     }
+
+     body.light-mode #quiz #previous-question,
+     body.light-mode #quiz #complete-quiz,
+     body.light-mode #quiz #next-question,
+     body.light-mode #quiz #reveal-answer {
+     background: #E8D9BC !important;
+     background-color: #E8D9BC !important;
+     color: #28382A !important;
+     -webkit-text-fill-color: #28382A !important;
+     border: 1px solid #8B6A36 !important;
+     opacity: 1 !important;
+     text-shadow: none !important;
+     }
+
+     body.light-mode #quiz #previous-question *,
+     body.light-mode #quiz #complete-quiz *,
+     body.light-mode #quiz #next-question *,
+     body.light-mode #quiz #reveal-answer * {
+     color: #28382A !important;
+    -webkit-text-fill-color: #28382A !important;
+     }
+
+     body.light-mode #quiz #previous-question:hover,
+     body.light-mode #quiz #complete-quiz:hover,
+     body.light-mode #quiz #next-question:hover,
+     body.light-mode #quiz #reveal-answer:hover {
+     background: #D9C49A !important;
+     background-color: #D9C49A !important;
+     color: #211E17 !important;
+     -webkit-text-fill-color: #211E17 !important;
+     border-color: #75501D !important;
+     }
+
+     body.light-mode #quiz #quiz-options button:focus-visible,
+     body.light-mode #quiz #previous-question:focus-visible,
+     body.light-mode #quiz #complete-quiz:focus-visible,
+     body.light-mode #quiz #next-question:focus-visible,
+     body.light-mode #quiz #reveal-answer:focus-visible {
+     outline: 3px solid #805B27 !important;
+     outline-offset: 3px !important;
+     }
+     
+     .fa-solid,
+     .fa-regular,
+     .fa-brands {
+     display: inline-block;
+     vertical-align: middle;
+     }
+
+      body.light-mode .fa-solid,
+     body.light-mode .fa-regular {
+     vertical-align: middle;
+     }
+  
+     button i,
+     a i {
+     flex-shrink: 0;
+     }
+     
+     
+     
+:root {
+    --vv-logo-ink: #F0E6D0;
+    --vv-gold: #C8AD79;
+    --vv-sage: #A8B58C;
+    --vv-logo-hover: #D9BD88;
+}
+
+body.light-mode {
+    --vv-logo-ink: #26382C;
+    --vv-gold: #98703A;
+    --vv-sage: #526448;
+    --vv-logo-hover: #805B27;
+}
+
+.vv-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-shrink: 0;
+    text-decoration: none;
+    color: var(--vv-logo-ink);
+}
+
+.vv-logo-mark {
+    display: block;
+    width: 3.5rem;
+    height: 3.5rem;
+    flex-shrink: 0;
+    overflow: visible;
+    transition: transform 250ms ease;
+}
+
+.vv-logo-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.vv-logo-name {
+    display: block;
+    color: var(--vv-logo-ink);
+    font-family: Georgia, serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    line-height: 1.2;
+    transition: color 200ms ease;
+}
+
+.vv-logo-tagline {
+    display: block;
+    color: var(--vv-gold);
+    font-family: "Palatino Linotype", "Book Antiqua", serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.16em;
+    line-height: 1.5;
+    text-transform: uppercase;
+}
+
+.vv-logo:hover .vv-logo-mark {
+    transform: translateY(-2px);
+}
+
+.vv-logo:hover .vv-logo-name {
+    color: var(--vv-logo-hover);
+}
+
+.vv-logo:focus-visible {
+    outline: 2px solid var(--vv-gold);
+    outline-offset: 5px;
+    border-radius: 3px;
+}
+
+@media (max-width: 420px) {
+    .vv-logo {
+        gap: 0.45rem;
+    }
+
+    .vv-logo-mark {
+        width: 2.8rem;
+        height: 2.8rem;
+    }
+
+    .vv-logo-name {
+        font-size: 1.1rem;
+        letter-spacing: 0.08em;
+    }
+
+    .vv-logo-tagline {
+        font-size: 0.48rem;
+        letter-spacing: 0.1em;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .vv-logo-mark,
+    .vv-logo-name {
+        transition: none;
+    }
+}
+
+
+body.light-mode #word-wisdom > div.grid > div,
+body.light-mode #word-categories > div.grid > div,
+body.light-mode #stats article {
+    background: #FAF5E9 !important;
+    background-color: #FAF5E9 !important;
+    border-color: #D8C5A2 !important;
+    color: #30291F !important;
+    box-shadow: 0 5px 16px rgba(70, 53, 31, 0.08) !important;
+}
+
+body.light-mode #word-wisdom h3,
+body.light-mode #word-categories h3,
+body.light-mode #stats article p,
+body.light-mode #word-wisdom p:not(.text-antique),
+body.light-mode #word-categories p:not(.text-antique) {
+    color: #514535 !important;
+}
+
+body.light-mode #word-wisdom article > p:first-child,
+body.light-mode #word-categories article p.text-antique,
+body.light-mode #stats article #total-saved,
+body.light-mode #stats article #quiz-accuracy,
+body.light-mode #stats article #quiz-attempts {
+    color: #805B27 !important;
+}
+
+body.light-mode #learning-routine article,
+body.light-mode #learning-routine > div > div:last-child > div {
+    background: #FAF5E9 !important;
+    background-color: #FAF5E9 !important;
+    border-color: #D8C5A2 !important;
+    color: #30291F !important;
+}
+
+body.light-mode #learning-routine h3,
+body.light-mode #learning-routine p:not(.text-antique) {
+    color: #514535 !important;
+}
+
+body.light-mode #word-results .word-result-card {
+    background: #FFFDF8 !important;
+    background-color: #FFFDF8 !important;
+    border-color: #D8C5A2 !important;
+    color: #30291F !important;
+}
+
+body.light-mode #word-results .word-result-card h3,
+body.light-mode #word-results .word-result-card h4,
+body.light-mode #word-results .word-result-card p {
+    color: #30291F !important;
+}
+
+body.light-mode #word-results .word-result-card h4 {
+    color: #805B27 !important;
+}
+
+body.light-mode #word-results .word-result-card button {
+    background: #E8D9BC !important;
+    color: #30291F !important;
+    border-color: #A58A5C !important;
+}
+    </style>
+</head>
+
+<body class="min-h-screen bg-ink font-body text-parchment antialiased transition-colors duration-500">
+
+    <div class="fixed inset-0 -z-20">
+        <img
+            src="images/img-1.avif"
+            alt=""
+            class="h-full w-full object-cover"
+        >
+    </div>
+
+    <div id="background-overlay"
+         class="fixed inset-0 -z-10 bg-[#11130F]/90 transition-colors duration-500">
+    </div>
+
+    <div class="pointer-events-none fixed inset-0 -z-10 opacity-[0.07]"
+         style="background-image: repeating-linear-gradient(90deg, transparent, transparent 79px, #C8AD79 80px);">
+    </div>
+
+    <header id="main-header"
+            class="sticky top-0 z-50 border-b border-antique/25 bg-ink/95 shadow-lg backdrop-blur-xl transition-colors duration-500">
+
+        <nav class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-5 py-4 lg:px-10"
+             aria-label="Main navigation">
+
+            
+    <a href="#home" class="vv-logo group" aria-label="VocabVeda Home">
+
+        <svg
+            class="vv-logo-mark"
+            viewBox="0 0 100 100"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true">
+
+        <path
+            d="M25 17 A38 38 0 1 1 15 62"
+            fill="none"
+            stroke="var(--vv-gold)"
+            stroke-width="1.8"
+            stroke-linecap="round"/>
+
+        <path
+            d="M22 27 L43 72 Q49 86 56 72 L79 27"
+            fill="none"
+            stroke="var(--vv-logo-ink)"
+            stroke-width="5"
+            stroke-linecap="round"
+            stroke-linejoin="round"/>
+
+        <path
+            d="M49 74 Q60 54 72 33"
+            fill="none"
+            stroke="var(--vv-sage)"
+            stroke-width="1.8"
+            stroke-linecap="round"/>
+
+        <path
+            d="M59 55 Q43 52 44 39 Q57 40 59 55Z"
+            fill="var(--vv-sage)"/>
+
+        <path
+            d="M65 44 Q62 29 76 24 Q79 37 65 44Z"
+            fill="var(--vv-sage)"/>
+
+        <path
+            d="M66 60 Q78 49 85 54 Q79 65 66 60Z"
+            fill="var(--vv-sage)"/>
+
+        <path
+            d="M51 7 L54 15 L62 18 L54 21 L51 29 L48 21 L40 18 L48 15Z"
+            fill="var(--vv-gold)"/>
+
+        <path
+            d="M18 65 L22 61 L26 65 L22 69Z"
+            fill="var(--vv-gold)"/>
+    </svg>
+
+    <span class="vv-logo-copy">
+        <span class="vv-logo-name">VocabVeda</span>
+        <span class="vv-logo-tagline">A personal word journal</span>
+    </span>
+
+</a>
+
+
+            <div class="flex flex-wrap items-center gap-3 text-xs sm:gap-5 sm:text-sm">
+                <a href="#search" class="transition duration-300 hover:text-antique">Dictionary</a>
+                <a href="#my-words" class="transition duration-300 hover:text-antique">My Words</a>
+                <a href="#quiz" class="transition duration-300 hover:text-antique">Quiz</a>
+                <a href="#stats" class="transition duration-300 hover:text-antique">Stats</a>
+
+                <button
+                    id="theme-toggle"
+                    type="button"
+                    class="flex items-center gap-2 border border-antique/40 px-3 py-2 text-antique transition duration-300 hover:border-antique hover:bg-antique hover:text-ink"
+                    aria-label="Switch to light theme"
+                    aria-pressed="false">
+
+                    <span id="theme-icon" aria-hidden="true">
+                    <i class="fa-solid fa-sun"></i>
+                    </span>
+                    <span id="theme-label">Light Mode</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main id="home" class="mx-auto max-w-7xl px-5 py-10 lg:px-10">
+
+        <section class="group relative isolate overflow-hidden border border-antique/40 bg-forest shadow-antique">
+
+            <img
+                src="https://images.unsplash.com/photo-1495446815901-a7297e633e8d?auto=format&fit=crop&w=1800&q=85"
+                alt="Rows of books in a quiet library"
+                class="absolute inset-0 -z-20 h-full w-full object-cover transition duration-1000 group-hover:scale-105"
+            >
+
+            <div class="absolute inset-0 -z-10 bg-gradient-to-r from-[#151A14]/95 via-[#1D281E]/85 to-[#1D281E]/40"></div>
+
+            <div class="pointer-events-none absolute right-5 top-0 hidden select-none font-display text-[250px] leading-none text-antique/[0.09] lg:block">
+                V
+            </div>
+
+            <div class="relative px-6 py-14 sm:px-10 lg:px-16 lg:py-24">
+
+                <p class="mb-5 flex items-center gap-3 text-xs uppercase tracking-[0.35em] text-antique">
+                    <span class="h-px w-10 bg-antique"></span>
+                    THE ART OF WORDS
+                </p>
+
+                <h2 class="max-w-3xl font-display text-4xl leading-tight text-parchment sm:text-6xl lg:text-7xl">
+                    Every word has
+                    <span class="block italic text-antique">a story to tell.</span>
+                </h2>
+
+                <p class="mt-6 max-w-xl text-base leading-8 text-parchment/80 sm:text-lg">
+                    Enter a world of language, discover beautiful expressions,
+                    understand their meanings and create a vocabulary that stays
+                    with you for a lifetime.
+                </p>
+
+                <div class="mt-9 flex flex-wrap gap-4">
+                    <a href="#search"
+                       class="inline-flex items-center gap-3 border border-antique bg-antique px-6 py-3.5 text-sm font-semibold text-ink shadow-lg transition duration-300 hover:-translate-y-1 hover:bg-parchment">
+                        Explore the Dictionary
+                        <i class="fa-solid fa-arrow-right ml-2" aria-hidden="true"></i>
+                    </a>
+
+                    <a href="#my-words"
+                       class="inline-flex items-center gap-3 border border-parchment/50 bg-black/20 px-6 py-3.5 text-sm text-parchment transition duration-300 hover:-translate-y-1 hover:border-antique hover:text-antique">
+                        Open My Collection
+                    </a>
+                </div>
+
+                <div class="mt-14 grid max-w-2xl grid-cols-1 gap-6 border-t border-antique/30 pt-7 sm:grid-cols-3">
+                    <div>
+                        <p class="font-display text-2xl text-antique">Discover</p>
+                        <p class="mt-1 text-xs text-parchment/60">Find new expressions</p>
+                    </div>
+
+                    <div>
+                        <p class="font-display text-2xl text-antique">Remember</p>
+                        <p class="mt-1 text-xs text-parchment/60">Save meaningful words</p>
+                    </div>
+
+                    <div>
+                        <p class="font-display text-2xl text-antique">Master</p>
+                        <p class="mt-1 text-xs text-parchment/60">Practice what you learn</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 gap-8 py-14 md:grid-cols-2 md:items-center">
+
+            <div>
+                <p class="text-xs uppercase tracking-[0.25em] text-antique">
+                    A JOURNEY THROUGH LANGUAGE
+                </p>
+
+                <h2 class="mt-3 font-display text-3xl leading-snug text-parchment sm:text-4xl">
+                    More than a dictionary.
+                    <span class="italic text-antique">A habit of learning.</span>
+                </h2>
+
+                <p class="mt-5 leading-8 text-parchment/70">
+                    Every new word opens a small window into the way we think,
+                    communicate and understand the world. VocabVeda helps you
+                    collect those windows, one word at a time.
+                </p>
+
+                <p class="mt-4 leading-8 text-parchment/70">
+                    Look up definitions, hear pronunciation when audio is
+                    available, revisit your saved words and check how well
+                    you remember them.
+                </p>
+            </div>
+
+            <div class="group relative h-72 overflow-hidden border border-antique/35 shadow-antique sm:h-80">
+                <img
+                    src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1000&q=85"
+                    alt="Notebook and writing tools on a desk"
+                    class="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                >
+
+                <div class="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent"></div>
+
+                <p class="absolute bottom-5 left-5 font-display text-2xl italic text-parchment">
+                    Learn. Reflect. Remember.
+                </p>
+            </div>
+        </section>
+
+             
+<section id="word-wisdom" class="scroll-mt-28 border-t border-antique/25 py-14">
+
+    <div class="mb-8">
+        <p class="text-xs uppercase tracking-[0.25em] text-antique">
+            THE ART OF LEARNING
+        </p>
+
+        <h2 class="mt-2 font-display text-3xl text-parchment sm:text-4xl">
+            Word Wisdom
+        </h2>
+
+        <p class="mt-3 max-w-2xl leading-7 text-parchment/65">
+            Learning a word is only the beginning. Understanding it,
+            remembering it and using it naturally is what makes it yours.
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+
+        <div class="border border-antique/25 bg-[#22251E]/95 p-6 transition duration-300 hover:-translate-y-1 hover:border-antique/70">
+            <p class="font-display text-3xl text-antique">01</p>
+            <h3 class="mt-4 font-display text-xl text-parchment">
+                Learn in Context
+            </h3>
+            <p class="mt-3 text-sm leading-7 text-parchment/70">
+                Read the definition and notice how a word is used in a
+                sentence. Context helps you understand its meaning more clearly.
+            </p>
+        </div>
+
+        <div class="border border-antique/25 bg-[#22251E]/95 p-6 transition duration-300 hover:-translate-y-1 hover:border-antique/70">
+            <p class="font-display text-3xl text-antique">02</p>
+            <h3 class="mt-4 font-display text-xl text-parchment">
+                Make It Personal
+            </h3>
+            <p class="mt-3 text-sm leading-7 text-parchment/70">
+                Create your own sentence using a new word. Connecting a word
+                with your experiences makes it easier to recall.
+            </p>
+        </div>
+
+        <div class="border border-antique/25 bg-[#22251E]/95 p-6 transition duration-300 hover:-translate-y-1 hover:border-antique/70">
+            <p class="font-display text-3xl text-antique">03</p>
+            <h3 class="mt-4 font-display text-xl text-parchment">
+                Revise Regularly
+            </h3>
+            <p class="mt-3 text-sm leading-7 text-parchment/70">
+                Revisit your saved vocabulary and test your memory.
+                Short, regular practice sessions can help you retain what you learn.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+
+<section id="word-categories" class="border-t border-antique/25 py-14">
+
+    <div class="mb-8">
+        <p class="text-xs uppercase tracking-[0.25em] text-antique">
+            BUILD YOUR VOCABULARY
+        </p>
+
+        <h2 class="mt-2 font-display text-3xl text-parchment sm:text-4xl">
+            Explore Word Categories
+        </h2>
+
+        <p class="mt-3 max-w-2xl leading-7 text-parchment/65">
+            Discover words for different situations, from expressing emotions
+            to communicating confidently and describing the world around you.
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+
+        <div class="border border-antique/25 bg-[#22251E]/95 p-6 transition duration-300 hover:border-antique/70">
+            <i class="fa-solid fa-star" aria-hidden="true"></i>
+            <h3 class="mt-4 font-display text-xl text-parchment">
+                Emotions
+            </h3>
+            <p class="mt-2 text-sm leading-6 text-parchment/65">
+                Words to express feelings and moods.
+            </p>
+            <p class="mt-4 border-t border-antique/20 pt-3 text-sm text-antique">
+                Serene · Elated · Melancholy
+            </p>
+        </div>
+
+        <div class="border border-antique/25 bg-[#22251E]/95 p-6 transition duration-300 hover:border-antique/70">
+            <i class="fa-solid fa-star" aria-hidden="true"></i>
+            <h3 class="mt-4 font-display text-xl text-parchment">
+                Personality
+            </h3>
+            <p class="mt-2 text-sm leading-6 text-parchment/65">
+                Describe people, qualities and character.
+            </p>
+            <p class="mt-4 border-t border-antique/20 pt-3 text-sm text-antique">
+                Benevolent · Witty · Resilient
+            </p>
+        </div>
+
+        <div class="border border-antique/25 bg-[#22251E]/95 p-6 transition duration-300 hover:border-antique/70">
+            <i class="fa-solid fa-star" aria-hidden="true"></i>
+            <h3 class="mt-4 font-display text-xl text-parchment">
+                Communication
+            </h3>
+            <p class="mt-2 text-sm leading-6 text-parchment/65">
+                Express ideas with clarity and confidence.
+            </p>
+            <p class="mt-4 border-t border-antique/20 pt-3 text-sm text-antique">
+                Articulate · Concise · Persuasive
+            </p>
+        </div>
+
+        <div class="border border-antique/25 bg-[#22251E]/95 p-6 transition duration-300 hover:border-antique/70">
+            <i class="fa-solid fa-star" aria-hidden="true"></i>
+            <h3 class="mt-4 font-display text-xl text-parchment">
+                Academic
+            </h3>
+            <p class="mt-2 text-sm leading-6 text-parchment/65">
+                Useful words for reading, writing and study.
+            </p>
+            <p class="mt-4 border-t border-antique/20 pt-3 text-sm text-antique">
+                Analyze · Infer · Evaluate
+            </p>
+        </div>
+
+    </div>
+
+    <div class="mt-7 border border-antique/25 bg-forest p-6 sm:flex sm:items-center sm:justify-between sm:gap-6">
+        <div>
+            <h3 class="font-display text-xl text-parchment">
+                Found a word you want to know?
+            </h3>
+            <p class="mt-2 text-sm leading-6 text-parchment/70">
+                Look it up in the dictionary and add it to your collection.
+            </p>
+        </div>
+
+        <a href="#search"
+           class="mt-5 inline-flex shrink-0 items-center gap-2 border border-antique bg-antique px-5 py-3 text-sm font-semibold text-ink transition hover:bg-parchment sm:mt-0">
+            Discover a Word <span aria-hidden="true">→</span>
+        </a>
+    </div>
+
+</section>
+
+
+        <section id="stats" class="scroll-mt-28 py-10">
+
+            <div class="mb-7">
+                <p class="text-xs uppercase tracking-[0.25em] text-antique">YOUR PROGRESS</p>
+
+                <h2 class="mt-2 font-display text-3xl text-parchment sm:text-4xl">
+                    The learning ledger
+                </h2>
+
+                <p class="mt-3 max-w-2xl leading-7 text-parchment/65">
+                    A personal record of the vocabulary you collect and the
+                    progress you make through practice.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+
+                <div class="group border border-antique/25 bg-[#22251E]/95 p-6 shadow-lg transition duration-300 hover:-translate-y-1 hover:border-antique/70 hover:shadow-glow">
+                    <p class="text-sm text-parchment/65">Words collected</p>
+                    <p id="total-saved" class="mt-3 font-display text-4xl text-antique">0</p>
+                    <p class="mt-2 text-xs text-parchment/45">Your personal vocabulary</p>
+                </div>
+
+                <div class="group border border-antique/25 bg-[#22251E]/95 p-6 shadow-lg transition duration-300 hover:-translate-y-1 hover:border-antique/70 hover:shadow-glow">
+                    <p class="text-sm text-parchment/65">Quiz accuracy</p>
+                    <p id="quiz-accuracy" class="mt-3 font-display text-4xl text-antique">0%</p>
+                    <p class="mt-2 text-xs text-parchment/45">Based on your quiz answers</p>
+                </div>
+
+                <div class="group border border-antique/25 bg-[#22251E]/95 p-6 shadow-lg transition duration-300 hover:-translate-y-1 hover:border-antique/70 hover:shadow-glow">
+                    <p class="text-sm text-parchment/65">Quiz attempts</p>
+                    <p id="quiz-attempts" class="mt-3 font-display text-4xl text-antique">0</p>
+                    <p class="mt-2 text-xs text-parchment/45">Words you have practised</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="search" class="scroll-mt-28 border-t border-antique/25 py-14">
+
+            <div class="mb-8">
+                <p class="text-xs uppercase tracking-[0.25em] text-antique">THE DICTIONARY</p>
+
+                <h2 class="mt-2 font-display text-3xl text-parchment sm:text-4xl">
+                    Find your next word
+                </h2>
+
+                <p class="mt-3 max-w-2xl leading-7 text-parchment/65">
+                    Search any English word to explore its meaning, phonetics,
+                    part of speech, example sentences and available audio.
+                </p>
+            </div>
+
+            <form id="word-search-form" class="flex flex-col gap-3 sm:flex-row" role="search">
+                <label for="word-search" class="sr-only">Enter an English word</label>
+
+                <input
+                    id="word-search"
+                    name="word"
+                    type="search"
+                    placeholder="Enter a word to search..."
+                    autocomplete="off"
+                    required
+                    class="min-h-14 min-w-0 flex-1 border border-antique/40 bg-[#22251E]/95 px-5 text-parchment placeholder:text-parchment/40 transition duration-300 focus:border-antique focus:outline-none focus:ring-1 focus:ring-antique"
+                >
+
+                <button
+                    type="submit"
+                    class="min-h-14 border border-antique bg-antique px-8 font-semibold text-ink transition duration-300 hover:-translate-y-0.5 hover:bg-parchment">
+                    Search Word
+                </button>
+            </form>
+
+            <div id="loading-state"
+                 class="mt-6 hidden border border-antique/25 bg-[#22251E]/95 p-8 text-center"
+                 role="status" aria-live="polite">
+
+                <div class="mx-auto mb-4 h-8 w-8 animate-spin border-2 border-antique/30 border-t-antique"></div>
+
+                <p class="font-display text-xl text-antique">Turning the pages...</p>
+                <p class="mt-2 text-sm text-parchment/60">Looking up your word in the dictionary.</p>
+            </div>
+
+            <div id="error-state"
+                 class="mt-6 hidden border border-red-400/40 bg-red-950/70 p-6"
+                 role="alert">
+
+                <h3 class="font-display text-xl text-red-200">Word not found</h3>
+
+                <p id="error-message" class="mt-2 text-sm leading-6 text-red-100/80">
+                    Something went wrong. Please try again.
+                </p>
+            </div>
+
+            <div id="empty-state"
+                 class="mt-6 hidden border border-antique/25 bg-[#22251E]/95 p-8 text-center">
+
+                <p class="font-display text-xl text-antique">No results found</p>
+
+                <p class="mt-2 text-sm text-parchment/60">
+                    Try another word or check your spelling.
+                </p>
+            </div>
+
+            <div id="word-results" class="mt-6 space-y-5" aria-live="polite"></div>
+
+            <div id="word-tip" class="mt-8 flex flex-col gap-4 border border-antique/20 bg-[#22251E]/80 p-5 sm:flex-row sm:items-center">
+
+
+                <div class="tip-icon flex h-12 w-12 shrink-0 items-center justify-center border border-antique/40 font-display text-2xl text-antique">
+
+                    <i class="fa-solid fa-lightbulb" aria-hidden="true"></i>
+                </div>
+
+                <div>
+                    <h3 class="font-display text-lg text-parchment">A little tip for learners</h3>
+
+                    <p class="mt-1 text-sm leading-6 text-parchment/60">
+                        Save unfamiliar words as you discover them. Revisiting a small collection regularly can help you remember new vocabulary.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="my-words" class="scroll-mt-28 border-t border-antique/25 py-14">
+
+            <div class="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+                <div>
+                    <p class="text-xs uppercase tracking-[0.25em] text-antique">YOUR PERSONAL COLLECTION</p>
+
+                    <h2 class="mt-2 font-display text-3xl text-parchment sm:text-4xl">
+                        My Words
+                    </h2>
+
+                    <p class="mt-3 max-w-2xl leading-7 text-parchment/65">
+                        Keep the words that matter to you in one place and return to them whenever you need a reminder.
+                    </p>
+                </div>
+
+                <button id="refresh-words"
+                        type="button"
+                        class="border border-antique/40 px-4 py-3 text-sm text-parchment transition duration-300 hover:border-antique hover:bg-forest">
+                    Refresh Collection
+                </button>
+            </div>
+
+            <div class="mt-7">
+                <label for="saved-search" class="mb-2 block text-sm text-parchment/75">
+                    Search your saved words
+                </label>
+
+                <input
+                    id="saved-search"
+                    type="search"
+                    placeholder="Find a saved word..."
+                    class="min-h-12 w-full border border-antique/30 bg-[#22251E]/95 px-4 text-parchment placeholder:text-parchment/40 transition duration-300 focus:border-antique focus:outline-none sm:max-w-md"
+                >
+            </div>
+
+            <div id="saved-words-list"
+                 class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2"
+                 aria-live="polite">
+            </div>
+
+            <div id="saved-empty-state"
+                 class="mt-6 border border-dashed border-antique/35 bg-[#22251E]/70 p-10 text-center">
+
+                <div class="mb-4 font-display text-4xl text-antique" aria-hidden="true">❧</div>
+
+                <p class="font-display text-xl text-antique">Your collection begins here</p>
+
+                <p class="mt-2 text-sm leading-6 text-parchment/60">
+                    Search for a word and save it to build your vocabulary.
+                </p>
+
+                <a href="#search"
+                   class="mt-5 inline-block border border-antique/50 px-5 py-3 text-sm text-parchment transition duration-300 hover:bg-antique hover:text-ink">
+                    Find a Word
+                </a>
+            </div>
+        </section>
+
+        <section id="quiz" class="scroll-mt-28 border-t border-antique/25 py-14">
+
+            <div class="mb-8">
+                <p class="text-xs uppercase tracking-[0.25em] text-antique">TEST YOUR MEMORY</p>
+
+                <h2 class="mt-2 font-display text-3xl text-parchment sm:text-4xl">
+                    The Word Challenge
+                </h2>
+
+                <p class="mt-3 max-w-2xl leading-7 text-parchment/65">
+                    Test your vocabulary with familiar words and new challenges.
+                    Choose the correct meaning and improve your word power.
+                </p>
+            </div>
+
+            <div class="relative isolate overflow-hidden border border-antique/35 bg-[#20271F] shadow-antique">
+
+                <img
+                    src="https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?auto=format&fit=crop&w=1400&q=85"
+                    alt=""
+                    class="absolute inset-0 -z-20 h-full w-full object-cover"
+                >
+
+                <div class="absolute inset-0 -z-10 bg-[#171914]/90"></div>
+
+                <div class="p-6 sm:p-10">
+
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                        <span class="border border-antique/40 px-3 py-2 text-xs uppercase tracking-[0.15em] text-antique">
+                            QUIZ MODE
+                        </span>
+
+                        <span id="quiz-progress" class="text-sm text-parchment/80" aria-live="polite">
+                            Ready to begin
+                        </span>
+                    </div>
+
+                    <div id="quiz-empty-state" class="py-12 text-center">
+
+                        <div class="mb-5 text-5xl text-antique" aria-hidden="true">
+                        <i class="fa-solid fa-star"></i>
+                        </div>
+
+                        <h3 class="font-display text-2xl text-parchment sm:text-3xl">
+                            Ready to expand your vocabulary?
+                        </h3>
+
+                        <p class="mx-auto mt-3 max-w-md text-sm leading-7 text-parchment/75">
+                            Start a mixed vocabulary quiz with new words and meanings.
+                            You don't need to save every word first.
+                        </p>
+
+                        <a href="#search"
+                           class="mt-6 inline-block border border-antique px-5 py-3 text-sm text-antique transition hover:bg-antique hover:text-ink">
+                            Discover Words
+                        </a>
+                    </div>
+
+                    <div id="quiz-content" class="hidden py-8">
+
+                        <p class="text-xs uppercase tracking-[0.2em] text-antique">
+                            CHOOSE THE CORRECT MEANING
+                        </p>
+
+                        <h3 id="quiz-question-word"
+                            class="mt-4 font-display text-2xl leading-relaxed text-parchment sm:text-3xl"
+                            aria-live="polite">
+                            Your word will appear here
+                        </h3>
+
+                        <p class="mt-3 text-sm text-parchment/75">
+                            Select the correct word from the four options.
+                        </p>
+
+                        <p id="quiz-definition" class="sr-only"></p>
+
+                        <div id="quiz-options"
+                             class="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2"
+                             role="group"
+                             aria-label="Answer choices">
+                        </div>
+
+                        <p id="quiz-option-feedback"
+                           class="mt-4 hidden text-sm font-semibold"
+                           role="status"
+                           aria-live="polite"></p>
+
+                        <button id="reveal-answer"
+                                type="button"
+                                class="mt-6 hidden border border-antique/50 px-5 py-3 text-sm text-parchment transition hover:bg-forest">
+                            Reveal Word
+                        </button>
+
+                        <div id="quiz-answer" class="mt-5 hidden border-l-2 border-antique bg-forest/80 p-5">
+                            <p class="text-xs uppercase tracking-[0.15em] text-antique">THE ANSWER</p>
+
+                            <p id="quiz-word" class="mt-2 font-display text-3xl text-parchment"></p>
+                        </div>
+
+                        <div id="quiz-feedback" class="mt-6 hidden">
+
+                            <p class="mb-3 text-sm text-parchment/80">
+                                Did you remember this word?
+                            </p>
+
+                            <div class="flex flex-wrap gap-3">
+                                <button id="quiz-knew"
+                                        type="button"
+                                        class="border border-green-700 bg-green-950/60 px-5 py-3 text-sm text-green-200 transition hover:bg-green-900">
+                                    I knew it
+                                </button>
+
+                                <button id="quiz-didnt-know"
+                                        type="button"
+                                        class="border border-antique/50 px-5 py-3 text-sm text-parchment transition hover:bg-wine">
+                                    I didn't
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-3 border-t border-antique/25 pt-6">
+
+                        <button id="start-quiz"
+                                type="button"
+                                class="bg-antique px-6 py-3 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:bg-parchment">
+                            Start Quiz
+                        </button>
+                        <button id="previous-question"
+                                type="button"
+                                class="hidden border border-antique/60 px-6 py-3 text-sm text-parchment transition hover:bg-forest">
+                                ← Previous Question
+                        </button>
+                        <button id="complete-quiz"
+                                type="button"
+                                class="hidden border border-antique/60 px-6 py-3 text-sm text-parchment transition hover:bg-forest">
+                                Complete Quiz
+                                </button>
+                        <button id="next-question"
+                                type="button"
+                                class="hidden border border-antique/60 px-6 py-3 text-sm text-parchment transition hover:bg-forest">
+                            Next Question →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="relative isolate my-8 overflow-hidden border border-antique/30">
+
+            <img
+                src="https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&w=1400&q=85"
+                alt=""
+                class="absolute inset-0 -z-20 h-full w-full object-cover"
+            >
+
+            <div class="absolute inset-0 -z-10 bg-[#171914]/85"></div>
+
+            <div class="px-6 py-12 text-center sm:px-12 sm:py-16">
+
+                <p class="text-xs uppercase tracking-[0.3em] text-antique">
+                    A THOUGHT TO REMEMBER
+                </p>
+
+                <h2 class="mx-auto mt-5 max-w-3xl font-display text-3xl italic leading-relaxed text-parchment sm:text-4xl">
+                    "The limits of my language mean the limits of my world."
+                </h2>
+
+                <p class="mt-5 text-sm uppercase tracking-[0.2em] text-antique">
+                    Keep discovering.
+                </p>
+
+                <a href="#search"
+                   class="mt-7 inline-block border border-antique/60 px-6 py-3 text-sm text-parchment transition duration-300 hover:bg-antique hover:text-ink">
+                    Learn a New Word
+                </a>
+            </div>
+        </section>
+
+        <footer class="mt-14 border-t border-antique/25 py-9">
+
+            <div class="flex flex-col justify-between gap-6 sm:flex-row sm:items-center">
+
+                <div>
+                    <a href="#home"
+                       class="font-display text-2xl tracking-[0.12em] text-antique transition hover:text-parchment">
+                        VocabVeda
+                    </a>
+
+                    <p class="mt-2 text-sm text-parchment/55">
+                        A little knowledge, one word at a time.
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap gap-5 text-sm text-parchment/65">
+                    <a href="#search" class="transition hover:text-antique">Dictionary</a>
+                    <a href="#my-words" class="transition hover:text-antique">My Words</a>
+                    <a href="#quiz" class="transition hover:text-antique">Quiz</a>
+                </div>
+            </div>
+
+            <div class="mt-7 border-t border-antique/15 pt-5">
+                <p class="text-xs leading-6 text-parchment/40">
+                    Dictionary definitions are retrieved from the English Wiktionary API.
+                    Pronunciation is available through your browser's speech feature.
+                </p>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const themeLabel = document.getElementById('theme-label');
+
+        function setTheme(isLightTheme) {
+            document.body.classList.toggle('light-mode', isLightTheme);
+
+            themeToggle.setAttribute('aria-pressed', String(isLightTheme));
+            themeToggle.setAttribute(
+                'aria-label',
+                isLightTheme ? 'Switch to dark theme' : 'Switch to light theme'
+            );
+
+            themeIcon.innerHTML = isLightTheme
+            ? '<i class="fa-solid fa-moon" aria-hidden="true"></i>'
+            : '<i class="fa-solid fa-sun" aria-hidden="true"></i>';
+            themeLabel.textContent = isLightTheme ? 'Dark Mode' : 'Light Mode';
+        }
+
+        themeToggle.addEventListener('click', function () {
+            setTheme(!document.body.classList.contains('light-mode'));
+        });
+    </script>
+
+    <script src="./script.js"></script>
+</body>
+</html>
