@@ -315,18 +315,6 @@ function displayWord(word, entries) {
                 cleanText(item.definition) || "Definition unavailable."
             ));
 
-            const exampleText =
-                item.parsedExamples?.[0]?.example ||
-                item.examples?.[0];
-
-            if (exampleText) {
-                block.appendChild(createElement(
-                    "p",
-                    "text-sm italic opacity-80 mt-2",
-                    `Example: ${cleanText(exampleText)}`
-                ));
-            }
-
             card.appendChild(block);
         });
 
@@ -850,7 +838,7 @@ function recordQuizAnswer(knewIt) {
 
     if (quizProgress) {
         quizProgress.textContent =
-            `Question ${quizIndex + 1} of ${quizWords.length} · ` +
+            `Question ${quizIndex + 1} of ${quizWords.length} - ` +
             (knewIt ? "You knew it" : "Keep practising");
     }
 
