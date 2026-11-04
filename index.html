@@ -1253,13 +1253,24 @@ body.light-mode #word-results .word-result-card button {
             </form>
 
             <div id="loading-state"
-                 class="mt-6 hidden border border-antique/25 bg-[#22251E]/95 p-8 text-center"
+                 class="mt-6 hidden border border-antique/25 bg-[#22251E]/95 p-6"
                  role="status" aria-live="polite">
 
-                <div class="mx-auto mb-4 h-8 w-8 animate-spin border-2 border-antique/30 border-t-antique"></div>
+                <p class="mb-5 font-display text-xl text-antique">
+                   Turning the pages...
+               </p>
 
-                <p class="font-display text-xl text-antique">Turning the pages...</p>
-                <p class="mt-2 text-sm text-parchment/60">Looking up your word in the dictionary.</p>
+               <p class="mb-6 text-sm text-parchment/60">
+                  Looking up your word in the dictionary.
+               </p>
+
+               <div class="animate-pulse space-y-4">
+                   <div class="h-5 w-1/3 bg-antique/20"></div>
+                   <div class="h-3 w-1/4 bg-antique/15"></div>
+                   <div class="mt-5 h-3 w-full bg-antique/15"></div>
+                   <div class="h-3 w-5/6 bg-antique/15"></div>
+                   <div class="h-3 w-2/3 bg-antique/15"></div>
+              </div>
             </div>
 
             <div id="error-state"

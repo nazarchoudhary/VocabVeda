@@ -523,8 +523,15 @@ savedWordsList?.addEventListener("click", event => {
     }
 });
 
-savedSearch?.addEventListener("input", renderSavedWords);
+let savedSearchTimer;
 
+savedSearch?.addEventListener("input", () => {
+    clearTimeout(savedSearchTimer);
+
+    savedSearchTimer = setTimeout(() => {
+        renderSavedWords();
+    }, 300);
+});
 
 let quizWords = [];
 let quizIndex = 0;
