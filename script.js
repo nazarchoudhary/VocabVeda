@@ -117,13 +117,27 @@ function showError(message) {
     errorState?.classList.remove("hidden");
 }
 
-function cleanText(value) {
+ function cleanText(value) {
     if (typeof value !== "string") return "";
 
     const temporaryElement = document.createElement("div");
     temporaryElement.innerHTML = value;
 
-    return temporaryElement.textContent.trim();
+    // Remove unwanted HTML elements
+    temporaryElement.querySelectorAll("style, script").forEach(element => {
+        element.remove();
+    });
+
+    let text = temporaryElement.textContent || "";
+
+    // Remove leaked Wiktionary CSS
+    text = text.replace(
+        /\.mw-parser-output\s*\.defdate\s*\{[^}]*\}/gi,
+        ""
+    );
+
+    // Clean extra spaces
+    return text.replace(/\s+/g, " ").trim();
 }
 
 function createElement(tag, className, text) {
@@ -573,12 +587,25 @@ async function getQuizPool() {
 }
 
 function cleanDefinition(text) {
+    if (typeof text !== "string") return "";
+
     const parser = new DOMParser();
     const doc = parser.parseFromString(text, "text/html");
 
-    return (doc.body.textContent || "")
-        .replace(/\s+/g, " ")
-        .trim();
+    // Remove unwanted HTML elements
+    doc.querySelectorAll("style, script").forEach(element => {
+        element.remove();
+    });
+
+    let definition = doc.body.textContent || "";
+
+    // Remove leaked Wiktionary CSS
+    definition = definition.replace(
+        /\.mw-parser-output\s*\.defdate\s*\{[^}]*\}/gi,
+        ""
+    );
+
+    return definition.replace(/\s+/g, " ").trim();
 }
 
 function resetQuizQuestion() {
