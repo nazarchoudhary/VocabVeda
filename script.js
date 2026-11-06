@@ -123,20 +123,17 @@ function showError(message) {
     const temporaryElement = document.createElement("div");
     temporaryElement.innerHTML = value;
 
-    // Remove unwanted HTML elements
     temporaryElement.querySelectorAll("style, script").forEach(element => {
         element.remove();
     });
 
     let text = temporaryElement.textContent || "";
 
-    // Remove leaked Wiktionary CSS
     text = text.replace(
         /\.mw-parser-output\s*\.defdate\s*\{[^}]*\}/gi,
         ""
     );
 
-    // Clean extra spaces
     return text.replace(/\s+/g, " ").trim();
 }
 
@@ -586,14 +583,12 @@ function cleanDefinition(text) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(text, "text/html");
 
-    // Remove unwanted HTML elements
     doc.querySelectorAll("style, script").forEach(element => {
         element.remove();
     });
 
     let definition = doc.body.textContent || "";
 
-    // Remove leaked Wiktionary CSS
     definition = definition.replace(
         /\.mw-parser-output\s*\.defdate\s*\{[^}]*\}/gi,
         ""
