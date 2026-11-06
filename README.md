@@ -56,4 +56,4 @@ VocabVeda/
 
 ## Live Website
 
-The live website link will be added after deployment.
+https://vocabveda.vercel.app/
