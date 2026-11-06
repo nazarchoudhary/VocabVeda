@@ -1432,38 +1432,25 @@ body.light-mode #word-results .word-result-card button {
 
                     <div id="quiz-content" class="hidden py-8">
 
-                        <p class="text-xs uppercase tracking-[0.2em] text-antique">
-                            CHOOSE THE CORRECT MEANING
-                        </p>
+                         <p class="text-xs uppercase tracking-[0.2em] text-antique">
+                             RECALL THE WORD
+                         </p>
 
-                        <h3 id="quiz-question-word"
-                            class="mt-4 font-display text-2xl leading-relaxed text-parchment sm:text-3xl"
-                            aria-live="polite">
-                            Your word will appear here
-                        </h3>
+                         <h3 id="quiz-question-word"
+                             class="mt-4 font-display text-2xl leading-relaxed text-parchment sm:text-3xl"
+                             aria-live="polite">
+                             The definition will appear here
+                         </h3>
 
-                        <p class="mt-3 text-sm text-parchment/75">
-                            Select the correct word from the four options.
-                        </p>
+                         <p class="mt-3 text-sm text-parchment/75">
+                             Read the definition and try to remember the word before revealing the answer.
+                         </p>
 
-                        <p id="quiz-definition" class="sr-only"></p>
-
-                        <div id="quiz-options"
-                             class="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2"
-                             role="group"
-                             aria-label="Answer choices">
-                        </div>
-
-                        <p id="quiz-option-feedback"
-                           class="mt-4 hidden text-sm font-semibold"
-                           role="status"
-                           aria-live="polite"></p>
-
-                        <button id="reveal-answer"
-                                type="button"
-                                class="mt-6 hidden border border-antique/50 px-5 py-3 text-sm text-parchment transition hover:bg-forest">
-                            Reveal Word
-                        </button>
+                         <button id="reveal-answer"
+                                 type="button"
+                                 class="mt-6 hidden border border-antique/50 px-5 py-3 text-sm text-parchment transition hover:bg-forest">
+                                 Reveal Word
+                         </button>
 
                         <div id="quiz-answer" class="mt-5 hidden border-l-2 border-antique bg-forest/80 p-5">
                             <p class="text-xs uppercase tracking-[0.15em] text-antique">THE ANSWER</p>
