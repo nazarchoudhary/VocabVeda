@@ -658,67 +658,6 @@ async function prepareQuiz() {
     }
 }
 
-function createAnswerOptions() {
-    if (!quizOptions || !currentQuestion) return;
-
-    const distractors = [
-        ...new Set([
-            ...savedWords.map(item => item.word),
-            ...uniqueVocabulary.map(item => item.word)
-        ])
-    ].filter(word => word !== currentQuestion.word);
-
-    const choices = shuffleArray([
-        currentQuestion.word,
-        ...shuffleArray(distractors).slice(0, 3)
-    ]);
-
-    quizOptions.replaceChildren();
-    quizOptions.classList.remove("hidden");
-
-    choices.forEach(word => {
-        const option = createElement(
-            "button",
-            "w-full border border-antique/40 bg-[#22251E]/80 " +
-            "px-4 py-4 text-left text-sm text-parchment " +
-            "transition hover:border-antique hover:bg-forest " +
-            "focus:outline-none focus:ring-2 focus:ring-antique",
-            word
-        );
-
-        option.type = "button";
-        option.dataset.word = word;
-
-        option.addEventListener("click", () => {
-            if (answerRecorded) return;
-
-            selectedOption = word;
-
-            [...quizOptions.children].forEach(button => {
-                button.classList.remove("border-antique", "bg-forest");
-                button.setAttribute("aria-pressed", "false");
-            });
-
-            option.classList.add("border-antique", "bg-forest");
-            option.setAttribute("aria-pressed", "true");
-
-            if (quizOptionFeedback) {
-                quizOptionFeedback.textContent =
-                    "Choice selected. Click Reveal Word to check your answer.";
-                quizOptionFeedback.classList.remove("hidden");
-                quizOptionFeedback.classList.remove(
-                    "text-green-300",
-                    "text-red-300"
-                );
-            }
-
-            revealAnswerButton?.classList.remove("hidden");
-        });
-
-        quizOptions.appendChild(option);
-    });
-}
-
 function loadQuizQuestion() {
     const savedSet = new Set(savedWords.map(item => item.word));
 
@@ -739,18 +678,13 @@ function loadQuizQuestion() {
         quizQuestionWord.textContent = currentQuestion.definition;
     }
 
-    if (quizDefinition) {
-        quizDefinition.textContent = currentQuestion.definition;
-    }
-
     if (quizProgress) {
         quizProgress.textContent =
             `Question ${quizIndex + 1} of ${quizWords.length}`;
     }
 
-    createAnswerOptions();
+    revealAnswerButton?.classList.remove("hidden");
 
-   
     previousQuestionButton?.classList.toggle(
         "hidden",
         quizIndex === 0
@@ -758,25 +692,23 @@ function loadQuizQuestion() {
 
     completeQuizButton?.classList.toggle(
         "hidden",
-         quizIndex !== quizWords.length - 1
+        quizIndex !== quizWords.length - 1
     );
 
     nextQuestionButton?.classList.toggle(
-       "hidden",
-       quizIndex === quizWords.length - 1
+        "hidden",
+        quizIndex === quizWords.length - 1
     );
 
-
     if (nextQuestionButton) {
-        nextQuestionButton.disabled = !answerRecorded;
-        nextQuestionButton.classList.toggle("opacity-50", !answerRecorded);
+        nextQuestionButton.disabled = true;
+        nextQuestionButton.classList.add("opacity-50");
     }
 }
 
+
 revealAnswerButton?.addEventListener("click", () => {
     if (!currentQuestion || answerRecorded) return;
-
-    const isCorrect = selectedOption === currentQuestion.word;
 
     if (quizWord) {
         quizWord.textContent = currentQuestion.word;
@@ -793,6 +725,7 @@ revealAnswerButton?.addEventListener("click", () => {
             "p",
             "mt-2 text-sm leading-7 text-parchment"
         );
+
         answerText.dataset.role = "answer-definition";
         quizAnswer.appendChild(answerText);
     }
@@ -800,26 +733,6 @@ revealAnswerButton?.addEventListener("click", () => {
     if (answerText) {
         answerText.textContent = currentQuestion.definition;
     }
-
-    if (quizOptionFeedback) {
-        quizOptionFeedback.textContent = isCorrect
-            ? "Correct! You selected the right word."
-            : "Not quite. Check the correct answer below.";
-
-        quizOptionFeedback.classList.remove("hidden");
-        quizOptionFeedback.classList.toggle("text-green-300", isCorrect);
-        quizOptionFeedback.classList.toggle("text-red-300", !isCorrect);
-    }
-
-    [...(quizOptions?.children || [])].forEach(button => {
-        if (button.dataset.word === currentQuestion.word) {
-            button.classList.add("border-green-500", "bg-green-950/50");
-        } else if (button.dataset.word === selectedOption) {
-            button.classList.add("border-red-500", "bg-red-950/50");
-        }
-
-        button.disabled = true;
-    });
 
     const feedbackMessage = quizFeedback?.querySelector("p");
 
