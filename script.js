@@ -303,8 +303,6 @@ function displayWord(word, entries) {
             "word-result-card rounded-xl border border-antique/30 bg-[#22251E]/90 p-5"
         );
 
-        card.appendChild(partOfSpeech);
-
         (entry.definitions || []).slice(0, 5).forEach((item, index) => {
             const block = createElement("div", "mb-4");
 
